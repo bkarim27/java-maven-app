@@ -2,18 +2,18 @@
 
 library identifier: 'jenkins-shared-library@master', retriever: modernSCM(
     [$class: 'GitSCMSource',
-     remote: 'https://gitlab.com/nanuchi/jenkins-shared-library.git',
-     credentialsId: 'gitlab-credentials'
+     remote: 'https://github.com/bkarim27/local-shared-library.git',
+     credentialsId: 'GitHubToken'
     ]
 )
 
 pipeline {
     agent any
     tools {
-        maven 'Maven'
+        maven 'maven-3.6.3'
     }
     environment {
-        IMAGE_NAME = 'nanajanashia/demo-app:java-maven-2.0'
+        IMAGE_NAME = 'badshak/demo-app:java-maven-5.0'
     }
     stages {
         stage('build app') {
@@ -40,7 +40,7 @@ pipeline {
                    echo 'deploying docker image to EC2...'
 
                    def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME}"
-                   def ec2Instance = "ec2-user@35.180.251.121"
+                   def ec2Instance = "ec2-user@35.178.187.137"
 
                    sshagent(['ec2-server-key']) {
                        sh "scp -o StrictHostKeyChecking=no server-cmds.sh ${ec2Instance}:/home/ec2-user"
