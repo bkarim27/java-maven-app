@@ -27,7 +27,7 @@ pipeline {
                 }
             }
         }
-        stage("deploy - docker hub") {
+        stage("deploy - nexus") {
             steps {
                 script {
                     gv.deployApp()
