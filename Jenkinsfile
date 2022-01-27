@@ -1,3 +1,5 @@
+#!/usr/bin/env groovy
+@Library('jenkins-shared-library')
 def gv
 
 pipeline {
@@ -16,21 +18,21 @@ pipeline {
         stage("build jar") {
                     steps {
                         script {
-                            gv.buildJar()
+                           buildJar()
                     }
              }
         }
         stage("build docker image") {
             steps {
                 script {
-                    gv.buildImage()
+                    buildImage 'badshak/demo-app:java-maven-app-3.0'
                 }
             }
         }
         stage("deploy - docker hub") {
             steps {
                 script {
-                    gv.deployApp()
+                    deployApp 'badshak/demo-app:java-maven-app-3.0'
                 }
             }
         }
