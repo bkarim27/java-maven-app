@@ -15,8 +15,8 @@ pipeline {
                             versions:commit'
                         def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
                         def version = matcher[0][1]
-                        env.DOCKER_REPO = "badshak/demo-app"
-                        env.IMAGE_NAME = "java-maven-app-$version"
+                        //env.DOCKER_REPO = "badshak/demo-app"
+                        env.IMAGE_NAME = "badshak/demo-app:java-maven-app-$version-"
                         //env.IMAGE_NAME = "badshak/demo-app:java-maven-app-$version-$BUILD_NUMBER"
                     }
                 }
@@ -34,9 +34,9 @@ pipeline {
                 script {
                     echo "building the docker image..."
                     withCredentials([usernamePassword(credentialsId: 'DockerHub', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                         sh "docker build -t ${DOCKER_REPO}:${IMAGE_NAME} ."
+                         sh "docker build -t $IMAGE_NAME ."
                         sh "echo $PASS | docker login -u $USER --password-stdin"
-                          sh "docker push ${DOCKER_REPO}:${IMAGE_NAME}"
+                          sh "docker push $IMAGE_NAME"
                     }
                 }
             }
