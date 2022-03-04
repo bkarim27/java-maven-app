@@ -65,7 +65,7 @@ pipeline {
                         sh "git remote set-url origin https://${USER}:${PASS}@github.com/bkarim27/java-maven-app.git"
                         sh 'git add .'
                         sh 'git commit -m "ci: version bump"'
-                        sh 'git push origin HEAD:eks-deploy'
+                        sh 'git push origin HEAD:eks-dockerhub-deploy'
                     }
                 }
             }
